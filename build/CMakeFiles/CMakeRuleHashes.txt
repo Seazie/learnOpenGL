@@ -1,0 +1,2 @@
+# Hashes of file build rules.
+563e4e5c34132858fe908d34ed776639 _deps/glad-build/include/glad/glad.h

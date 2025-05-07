@@ -1,0 +1,4 @@
+/home/seazie/learnOpenGL/build/CMakeFiles/glad.dir
+/home/seazie/learnOpenGL/build/CMakeFiles/openGLTest.dir
+/home/seazie/learnOpenGL/build/CMakeFiles/edit_cache.dir
+/home/seazie/learnOpenGL/build/CMakeFiles/rebuild_cache.dir

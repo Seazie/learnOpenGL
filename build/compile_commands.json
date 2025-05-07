@@ -1,0 +1,12 @@
+[
+{
+  "directory": "/home/seazie/learnOpenGL/build",
+  "command": "/usr/bin/cc  -I/home/seazie/learnOpenGL/glad/include -g -o CMakeFiles/glad.dir/glad/src/glad.c.o -c /home/seazie/learnOpenGL/glad/src/glad.c",
+  "file": "/home/seazie/learnOpenGL/glad/src/glad.c"
+},
+{
+  "directory": "/home/seazie/learnOpenGL/build",
+  "command": "/usr/bin/c++  -I/home/seazie/learnOpenGL/glad/include -g -o CMakeFiles/openGLTest.dir/main.cpp.o -c /home/seazie/learnOpenGL/main.cpp",
+  "file": "/home/seazie/learnOpenGL/main.cpp"
+}
+]
