@@ -1,0 +1,10 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/Users/carli/Desktop/openGL/gitDownloadTestProject/learnOpenGL/build/cmake_install.cmake",
+		"C:/Users/carli/Desktop/openGL/gitDownloadTestProject/learnOpenGL/build/libs/glfw/cmake_install.cmake",
+		"C:/Users/carli/Desktop/openGL/gitDownloadTestProject/learnOpenGL/build/libs/glfw/src/cmake_install.cmake",
+		"C:/Users/carli/Desktop/openGL/gitDownloadTestProject/learnOpenGL/build/libs/glfw/docs/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

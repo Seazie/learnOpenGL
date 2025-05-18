@@ -1,13 +1,20 @@
-cmake_minimum_required(VERSION 3.14)
-project(openGLTest)
+cmake_minimum_required(VERSION 3.10)
+project(learnOpenGL)
 
-set(CMAKE_CXX_STANDARD 17)
+# Add GLFW
+add_subdirectory(libs/glfw)
 
-add_library(glad STATIC glad/src/glad.c)
-target_include_directories(glad PUBLIC glad/include)
+# Add your executable
+add_executable(learnOpenGL main.cpp glad/src/glad.c)
 
-find_package(glfw3 REQUIRED)
-find_package(OpenGL REQUIRED)
-add_executable(openGLTest main.cpp)
+# Include directories
+include_directories(${CMAKE_SOURCE_DIR}/glad/include)
+target_include_directories(learnOpenGL PRIVATE external/glfw/include glad)
 
-target_link_libraries(openGLTest PRIVATE glad glfw OpenGL::GL)
+# Link GLFW
+target_link_libraries(learnOpenGL PRIVATE glfw)
+
+# Link OpenGL
+if (WIN32)
+    target_link_libraries(learnOpenGL PRIVATE opengl32)
+endif()

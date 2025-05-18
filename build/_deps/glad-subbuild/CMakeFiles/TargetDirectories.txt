@@ -1,3 +1,0 @@
-/home/seazie/learnOpenGL/build/_deps/glad-subbuild/CMakeFiles/glad-populate.dir
-/home/seazie/learnOpenGL/build/_deps/glad-subbuild/CMakeFiles/edit_cache.dir
-/home/seazie/learnOpenGL/build/_deps/glad-subbuild/CMakeFiles/rebuild_cache.dir
