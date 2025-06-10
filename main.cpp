@@ -95,16 +95,20 @@ int main()
 
 
     //position of our rectangle
-    float rectVertices[] = {
+    /*float rectVertices[] = {
         //clockwise starting from top right
         0.5f, 0.5f, 0.0f,
         0.5f, -0.5f, 0.0f,
         -0.5f, -0.5f, 0.0f,
         -0.5f, 0.5f, 0.0
-    };
-    unsigned int rectIndices[] = {
-        0, 1, 3,
-        1, 2, 3
+    };*/
+    float twoTriangles[] = {
+        0.75f, 0.75f, 0.0f,
+        0.75f, -0.75f, 0.0f,
+        0.0f, -0.75f, 0.0f,
+        0.0f, -0.75f, 0.0f,
+        -0.75f, -0.75f, 0.0f,
+        -0.75f, 0.75f, 0.0f
     };
 
     //initialization of Vertex Buffer Object and Vertex Array Object
@@ -117,13 +121,8 @@ int main()
     glBindVertexArray(VAO);
     //bind buffer to its type
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(rectVertices), rectVertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(twoTriangles), twoTriangles, GL_STATIC_DRAW);
     //bind buffer to its type
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    //tell computer the data that will be incorporated into the element array buffer
-    //In this case, our "elements" are specified by the indices or "lines", rather than
-    // the vertices or "points"
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(rectIndices), rectIndices, GL_STATIC_DRAW);
 
     //link vertex attribute pointers
     //NOTE: Trouble understanding this section
@@ -159,9 +158,8 @@ int main()
         //draw triangle
         glUseProgram(shaderProgram);
         // with only one VAO, we don't have to bind it every time. Doing so for consistency
-        glBindVertexArray(VAO);
-        //Instead of DrawArrays we use DrawElements 
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        glBindVertexArray(VAO); 
+        glDrawArrays(GL_TRIANGLES, 0, 6);
         glBindVertexArray(0); //currently no need to unbind it every time
 
         glfwSwapBuffers(window);
