@@ -15,7 +15,7 @@ const char *fragmentShaderSource = "#version 330 core\n"
 "out vec4 FragColor;\n"
 "void main()\n"
 "{\n"
-"   FragColor = vec4(0.0f, 0.0f, 5.0f, 1.0f);\n"
+"   FragColor = vec4(0.0f, 0.0f, 0.5f, 1.0f);\n"
 "}\0";
 
 int main()
@@ -94,26 +94,39 @@ int main()
     glDeleteShader(fragmentShader);
 
 
-    //position of our triangle
-    float vertices[] = {
-        -0.5f, -0.5f, 0.0f,
+    //position of our rectangle
+    float rectVertices[] = {
+        //clockwise starting from top right
+        0.5f, 0.5f, 0.0f,
         0.5f, -0.5f, 0.0f,
-        0.0f, 0.5f, 0.0f
+        -0.5f, -0.5f, 0.0f,
+        -0.5f, 0.5f, 0.0
+    };
+    unsigned int rectIndices[] = {
+        0, 1, 3,
+        1, 2, 3
     };
 
     //initialization of Vertex Buffer Object and Vertex Array Object
-    unsigned int triangleVBO, VAO;
+    unsigned int VBO, EBO, VAO;
     //generate our VAO
     glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &triangleVBO);
+    glGenBuffers(1, &VBO);
+    glGenBuffers(1, &EBO);
     //bind VAO first befor binding VBOs
     glBindVertexArray(VAO);
     //bind buffer to its type
-    glBindBuffer(GL_ARRAY_BUFFER, triangleVBO);
-    //tell computer the data that will be incorporated into the array buffer
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(rectVertices), rectVertices, GL_STATIC_DRAW);
+    //bind buffer to its type
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    //tell computer the data that will be incorporated into the element array buffer
+    //In this case, our "elements" are specified by the indices or "lines", rather than
+    // the vertices or "points"
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(rectIndices), rectIndices, GL_STATIC_DRAW);
 
     //link vertex attribute pointers
+    //NOTE: Trouble understanding this section
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
@@ -124,12 +137,13 @@ int main()
     glBindVertexArray(0);
     
 
-    //glViewport(0, 0, 800, 600);
-
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    //This section not necessary but displays the width and height of the window in the output
+    /*
     int width, height;
     glfwGetFramebufferSize(window, &width, &height);
     std::cout << "Framebuffer size: " << width << "x" << height << std::endl;
+    */
 
     
 
@@ -146,8 +160,9 @@ int main()
         glUseProgram(shaderProgram);
         // with only one VAO, we don't have to bind it every time. Doing so for consistency
         glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
-        // glBindVertexArray(0); currently no need to unbind it every time
+        //Instead of DrawArrays we use DrawElements 
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        glBindVertexArray(0); //currently no need to unbind it every time
 
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -155,7 +170,7 @@ int main()
 
     //OPTIONAL: De-allocate all resources
     glDeleteVertexArrays(1, &VAO);
-    glDeleteBuffers(1, &triangleVBO);
+    glDeleteBuffers(1, &VBO);
     glDeleteProgram(shaderProgram);
 
     glfwTerminate();
