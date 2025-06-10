@@ -15,7 +15,7 @@ const char *fragmentShaderSource = "#version 330 core\n"
 "out vec4 FragColor;\n"
 "void main()\n"
 "{\n"
-"   FragColor = vec4(1.0f, 0.0f, 1.0f, 1.0f);\n"
+"   FragColor = vec4(0.0f, 0.0f, 5.0f, 1.0f);\n"
 "}\0";
 
 int main()
@@ -27,16 +27,18 @@ int main()
 
     //now we create a window object
 
-    GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(2545, 1550, "LearnOpenGL", NULL, NULL);
     if (window == NULL) 
     {
         std::cout << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
         return -1;
     }
+
     glfwMakeContextCurrent(window);
 
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) //the address of where the "window" is located is sent to the gladGLLoader
     {
         std::cout << "Failed to initialize GLAD" << std::endl;
         return -1;
@@ -100,28 +102,29 @@ int main()
     };
 
     //initialization of Vertex Buffer Object and Vertex Array Object
-    unsigned int VBO, VAO;
+    unsigned int triangleVBO, VAO;
     //generate our VAO
     glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
+    glGenBuffers(1, &triangleVBO);
     //bind VAO first befor binding VBOs
     glBindVertexArray(VAO);
     //bind buffer to its type
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, triangleVBO);
+    //tell computer the data that will be incorporated into the array buffer
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
     //link vertex attribute pointers
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
-    //we can undbind the VBOs buffer because it is now registered with glVertexAttribPointer
+    //we can unbind the VBOs buffer because it is now registered with glVertexAttribPointer
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
     // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
     glBindVertexArray(0);
     
 
-    glViewport(0, 0, 800, 600);
+    //glViewport(0, 0, 800, 600);
 
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     int width, height;
@@ -135,7 +138,7 @@ int main()
         processInput(window);
 
         //rendering here
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClearColor(1.0f, 0.5f, 0.5f, 1.0f);
         //glClearColor(1.0f, 0.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
@@ -152,7 +155,7 @@ int main()
 
     //OPTIONAL: De-allocate all resources
     glDeleteVertexArrays(1, &VAO);
-    glDeleteBuffers(1, &VBO);
+    glDeleteBuffers(1, &triangleVBO);
     glDeleteProgram(shaderProgram);
 
     glfwTerminate();
